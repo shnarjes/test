@@ -1,8 +1,16 @@
+from dataclasses import field
+from pyexpat import model
 from rest_framework import serializers
 
-from user.models import User
+from user.models import User,OTP
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('phone_number', 'first_name', 'last_name')
+
+'''
 class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -29,9 +37,4 @@ class RegisterSerializer(serializers.ModelSerializer):
                 last_name=validated_data['last_name']
             )
             return user
-
-
-class UpdateUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('email', 'password', 'first_name', 'last_name')
+'''

@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
-import user.utils
+import user.utils.utils
 
 
 class Migration(migrations.Migration):
@@ -43,8 +43,8 @@ class Migration(migrations.Migration):
             name='OTP',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.CharField(default=user.utils.create_otp_code, help_text='code', max_length=11, unique=True, verbose_name='code')),
-                ('exp_time', models.DateTimeField(default=user.utils.create_end_time, help_text='Time out', verbose_name='exp_time')),
+                ('code', models.CharField(help_text='code', max_length=11, unique=True, verbose_name='code')),
+                ('exp_time', models.DateTimeField(default=user.utils.utils.create_end_time, help_text='Time out', verbose_name='exp_time')),
                 ('type', models.IntegerField(choices=[(1, 'AUTHENTICATE'), (2, 'FORGETPASSWORD')], help_text='type', verbose_name='type')),
                 ('user', models.ForeignKey(help_text='user', on_delete=django.db.models.deletion.PROTECT, related_name='otp_user', to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
