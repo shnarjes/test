@@ -2,13 +2,14 @@ from dataclasses import field
 from pyexpat import model
 from rest_framework import serializers
 
-from user.models import User,OTP
+from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('phone_number', 'first_name', 'last_name')
+
 
 '''
 class LoginSerializer(serializers.ModelSerializer):

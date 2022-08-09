@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
+from numpy import number
 from user.managers import UserManager
 
 
@@ -41,6 +42,18 @@ class OTP(models.Model):
         verbose_name=_("exp_time"),
         help_text=_("Time out")
         )
+    exp_time_error1 = models.DateTimeField(
+        verbose_name=_("exp_time_error"),
+        help_text=_("Time out"),
+        null=True,
+        blank=True
+        )
+    exp_time_error2 = models.DateTimeField(
+        verbose_name=_("exp_time_error"),
+        help_text=_("Time out"),
+        null=True,
+        blank=True
+        )
     user = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
@@ -53,6 +66,12 @@ class OTP(models.Model):
         verbose_name=_("type"),
         help_text=_("type")
         )
+    number_error_code = models.PositiveIntegerField(
+        verbose_name=_("number_error_code"),
+        help_text=_("number_error_code"),
+        null=True,
+        blank=True
+    )
 
     @property
     def is_expired(self):

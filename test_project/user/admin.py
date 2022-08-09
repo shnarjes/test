@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from user.models import User, Address,OTP
+from user.models import User, Address, OTP
 
 
 admin.site.register(OTP)

@@ -30,8 +30,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         else:
             return request.method in self.SAFE_METHODS
-    
-    def has_object_permission(self, request, view,obj):
+
+    def has_object_permission(self, request, view, obj):
         if request.user.is_superuser:
             return True
         else:
@@ -51,15 +51,15 @@ class ProductAPIViewSet(viewsets.ModelViewSet):
         product = get_object_or_404(Product, pk=pk)
         serializer = ProductSerializers(product)
         return Response(serializer.data)
-    
-    def update(self, request,*args, **kwargs):
+
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
-    def destroy(self, request,*args, **kwargs):
+
+    def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.delete()
         return Response(status=status.HTTP_200_OK)
