@@ -5,7 +5,6 @@ import requests
 
 from datetime import datetime, timedelta
 
-from django.conf import settings
 from django.utils import timezone
 
 STATUS_CHOICES = {
@@ -55,7 +54,7 @@ class SendSMS():
             "MobileNumbers": [f"{phone}"],
             "LineNumber": self.get_sms_line()
         }
-        sms = requests.post(url, data, headers=headers)
+        requests.post(url, data, headers=headers)
 
     def request_sms_line(self):
         token_key = self.get_token()

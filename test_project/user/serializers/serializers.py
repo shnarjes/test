@@ -1,14 +1,11 @@
-from dataclasses import field
-from pyexpat import model
 from rest_framework import serializers
-
-from user.models import User
+from user.models.user import User
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('phone_number', 'first_name', 'last_name')
+        fields = ('phone_number', 'first_name', 'last_name','email')
 
 
 '''
