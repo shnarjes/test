@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from comment.models import Rate, CommentMe
+
+
+admin.site.register(Rate)
+admin.site.register(CommentMe)

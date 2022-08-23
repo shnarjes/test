@@ -37,15 +37,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cart',
-    'comment',
-    'introduction',
-    'payment',
-    'product',
+    # 'django.contrib.sites',
     'user',
+    'product',
+    'introduction',
+    'comment',
+    'payment',
+    'cart',
+    'rest_framework.authtoken',
+    'rest_framework_swagger',
+    'rest_framework',
+    'debug_toolbar',
+    'drf_yasg',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,7 +71,7 @@ ROOT_URLCONF = 'test_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,6 +83,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'test_project.wsgi.application'
 
@@ -87,6 +99,16 @@ DATABASES = {
 }
 '''
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'narjesshdb',
+        'USER': 'narjessh',
+        'PASSWORD': 'narjes12345678',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
@@ -129,3 +151,107 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
+# ----celery----
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_TIMEZONE = 'Asia/Tehran'
+CELERY_ALWAYS_EAGER = True
+BROKER_BACKEND = 'memory'
+
+# ---debug toolbar----
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
+
+
+# ------redis-----------
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": 'redis://127.0.0.1:6379/1',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+        }
+    },
+    "test": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": 'redis://127.0.0.1:6379/2',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+
+    }
+}
+# ---login google-------
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+SITE_ID = 1
+
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+SIGNUP_REDIRECT_URL = '/'
+SOCIALACCOUNT_ADAPTER  = 'test_project.adapter.MyAccountAdapter'
+LOGIN_REDIRECT_URLNAME = '/'
+
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = '/'
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+# ACCOUNT_ADAPTER = 'test_project.adapter.MyAccountAdapter'
+
+# SOCIALACCOUNT_QUERY_EMAIL = True
+# ACCOUNT_LOGOUT_ON_GET= True
+# ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# SIGNUP_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URLNAME = '/'
+# SOCIALACCOUNT_ADAPTER  = 'user.adapter.NoNewUsersAccountAdapter'
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'APP': {
+#             'client_id': '1076469376665-387r0ugoei81uatijovurok0qk31stq0.apps.googleusercontent.com',
+#             'secret': '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',
+#         }
+#     }
+# }
+
+
+
+
+# 1076469376665-387r0ugoei81uatijovurok0qk31stq0.apps.googleusercontent.com
+# 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
